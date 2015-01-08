@@ -46,14 +46,14 @@ var weQuoteInsert = function(rows){
 };
 
 googleApi.getDataTable(config.outputId).then(weQuoteInsert);
-/*
+
 var rule = new schedule.RecurrenceRule();
 rule.hour = 19;
 
 var j = schedule.scheduleJob(rule, function(){
     console.log('Schedulazione sheet2mongo.');
 });
-*/
+
 /*
 var params = {
 	search : "lasciare"
