@@ -11,7 +11,7 @@ var weQuoteInsert = function(rows){
 	var i,params,row;
 	var weQuoteInsertRow = function(row){
 		insert = function (result) {
-			if(result.length === 0){
+			if(result === false){
 				var tagsString = row.tag.split(",");
 				var tags = _.map(tagsString,function(tag){
 					return {
@@ -27,7 +27,7 @@ var weQuoteInsert = function(rows){
 				console.log(quote);
 				wequoteApi.insert(quote).then(
 					function(){
-						console.log("insert: " + row.quote);
+						console.log("insert: tag:" + row.tags + " quote:" + row.quote);
 					}
 				).fail(
 					function(error){

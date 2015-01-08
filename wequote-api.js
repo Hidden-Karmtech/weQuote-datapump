@@ -7,11 +7,11 @@ var Q = require('q');
 module.exports = {
 	list : function(params){
 	    var deferred = Q.defer();
-		http.get(
+	    http.get(
 			{
-				url: apiUrl + "/list",
+				url: apiUrl + "/quoteExists",
 				qs: {
-					search: params.search 
+					search: params.search
 				},
 				json:true
 			},
@@ -19,6 +19,7 @@ module.exports = {
 				if(error){
 					deferred.reject(error);
 				}else{
+					console.log(result);
 					deferred.resolve(result);
 				}
 			}
