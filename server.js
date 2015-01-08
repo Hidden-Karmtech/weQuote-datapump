@@ -11,7 +11,7 @@ var weQuoteInsert = function(rows){
 	var i,params,row;
 	var weQuoteInsertRow = function(row){
 		insert = function (result) {
-			if(result === false){
+			if(result === -1){
 				var tagsString = row.tag.split(",");
 				var tags = _.map(tagsString,function(tag){
 					return {
@@ -45,14 +45,17 @@ var weQuoteInsert = function(rows){
 	
 };
 
-googleApi.getDataTable(config.outputId).then(weQuoteInsert);
+
 
 var rule = new schedule.RecurrenceRule();
-rule.hour = 19;
+rule.second = 1;
 
 var j = schedule.scheduleJob(rule, function(){
+	googleApi.getDataTable(config.outputId).then(weQuoteInsert);
     console.log('Schedulazione sheet2mongo.');
 });
+
+console.log('Avvio sheet2mongo.');
 
 /*
 var params = {
