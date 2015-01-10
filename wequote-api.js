@@ -46,5 +46,26 @@ module.exports = {
 			
 		);
 		return deferred.promise;
+	},
+	update : function(id,quote){
+	    var deferred = Q.defer();
+		http.put(
+			{
+				url: apiUrl + "/update",
+				form: {
+					quoteId:id,
+					newQuote: quote
+				}
+			},
+			function(error, response, result){
+				if(error){
+					deferred.reject(error);
+				}else{
+					deferred.resolve(result);
+				}
+			}
+			
+		);
+		return deferred.promise;
 	}
 };

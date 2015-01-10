@@ -11,23 +11,36 @@ var weQuoteInsert = function(rows){
 	var i,params,row;
 	var weQuoteInsertRow = function(row){
 		insert = function (result) {
-			if(result === -1){
-				var tagsString = row.tag.split(",");
-				var tags = _.map(tagsString,function(tag){
-					return {
-						name : tag
-					};
-				});
-				var quote = {
-					text  	: row.quote,
-					author	: row.author,
-					source	: row.url,
-					tags	: tags
+			var tagsString = row.tag.split(",");
+			var tags = _.map(tagsString,function(tag){
+				return {
+					name : tag
 				};
-				console.log(quote);
+			});
+			var quote = {
+				text  	: row.quote,
+				author	: row.author,
+				source	: row.url,
+				tags	: tags
+			};
+			console.log(quote);
+			if(result === -1){
 				wequoteApi.insert(quote).then(
 					function(){
 						console.log("insert: tag:" + row.tags + " quote:" + row.quote);
+					}
+				).fail(
+					function(error){
+						console.log("errore: " + error);
+					}
+				);
+			}
+			else
+			{
+				var id = result;
+				wequoteApi.update(id,quote).then(
+					function(){
+						console.log("update: tag:" + row.tags + " quote:" + row.quote);
 					}
 				).fail(
 					function(error){
