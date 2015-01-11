@@ -58,13 +58,23 @@ var weQuoteInsert = function(rows){
 	
 };
 
-
+var getSheets = function(sheets)
+{
+	var promiseArray=[];
+	for(var i=0;i<sheets.length;i++)
+		{
+			console.log("File found: "+sheets[i].name+" key:"+sheets[i].key);
+			var promise = googleApi.getDataTable(sheets[i].key).then(weQuoteInsert);
+			promiseArray.push(promise);
+		}
+	return promiseArray;
+}
 
 var rule = new schedule.RecurrenceRule();
 rule.second = 1;
 
 var j = schedule.scheduleJob(rule, function(){
-	googleApi.getDataTable(config.outputId).then(weQuoteInsert);
+	googleApi.getDataTable(config.indexId).then(getSheets).all();
     console.log('Schedulazione sheet2mongo.');
 });
 
