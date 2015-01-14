@@ -23,11 +23,10 @@ var weQuoteInsert = function(rows){
 				source	: row.url,
 				tags	: tags
 			};
-			console.log(quote);
 			if(result === -1){
 				wequoteApi.insert(quote).then(
 					function(){
-						console.log("insert: tag:" + row.tags + " quote:" + row.quote);
+						console.log("insert: tag:" + row.tag + " quote:" + row.quote);
 					}
 				).fail(
 					function(error){
@@ -40,7 +39,9 @@ var weQuoteInsert = function(rows){
 				var id = result;
 				wequoteApi.update(id,quote).then(
 					function(){
-						console.log("update: tag:" + row.tags + " quote:" + row.quote);
+						console.log("update: tag:" + row.tag + " quote:" + row.quote);
+						row.id=id;
+						row.save();
 					}
 				).fail(
 					function(error){
@@ -60,25 +61,30 @@ var weQuoteInsert = function(rows){
 
 var getSheets = function(sheets)
 {
+	console.log("File count: "+sheets.length);
 	var promiseArray=[];
-	for(var i=0;i<sheets.length;i++)
-		{
-			console.log("File found: "+sheets[i].name+" key:"+sheets[i].key);
-			var promise = googleApi.getDataTable(sheets[i].key).then(weQuoteInsert);
-			promiseArray.push(promise);
-		}
+	sheets.forEach(
+			function(sheet){
+				console.log("File found: "+sheet.name+" key:"+sheet.key);
+				console.log("Fetch rows...");
+				var promise = googleApi.getDataTable(sheet.key).then(weQuoteInsert);
+				promiseArray.push(promise);
+			});
 	return promiseArray;
 }
 
 var rule = new schedule.RecurrenceRule();
-rule.second = 1;
+var now = new Date();
+now.addMinute();
+rule.minute = now.getMinutes();
 
 var j = schedule.scheduleJob(rule, function(){
 	googleApi.getDataTable(config.indexId).then(getSheets).all();
-    console.log('Schedulazione sheet2mongo.');
+    console.log('Schedulazione sheet2mongo at '+(new Date()));
 });
 
 console.log('Avvio sheet2mongo.');
+console.log('Schedulazione al minuto '+rule.minute);
 
 /*
 var params = {
