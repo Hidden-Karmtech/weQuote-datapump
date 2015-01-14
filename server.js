@@ -18,45 +18,59 @@ var weQuoteInsert = function(rows){
 				};
 			});
 			var quote = {
-				text  	: row.quote,
-				author	: row.author,
-				source	: row.url,
-				tags	: tags
+					text  	: row.quote,
+					author	: row.author,
+					source	: row.url,
+					tags	: tags
 			};
-			if(result === -1){
-				wequoteApi.insert(quote).then(
-					function(){
-						//console.log("insert: tag:" + row.tag + " quote:" + row.quote);
-					}
-				).fail(
-					function(error){
-						console.log("errore: " + error);
-					}
-				);
-			}
-			else
+			quote = wequoteApi.filter(quote);
+			if(quote!==null)
 			{
-				var id = result;
-				wequoteApi.update(id,quote).then(
-					function(){
-						//console.log("update: tag:" + row.tag + " quote:" + row.quote);
-						row.id=id;
-						row.save();
-					}
-				).fail(
-					function(error){
-						console.log("errore: " + error);
-					}
-				);
+				if(result === -1){
+					wequoteApi.insert(quote).then(
+							function(result){
+								console.log("insert quote:" + wequoteApi.filterText(row.quote));
+								row.id=JSON.parse(result)._id;
+								row.save();
+							}
+					).fail(
+							function(error){
+								console.log("errore: " + error);
+							}
+					);
+				}
+				else
+				{
+					var id = result;
+					wequoteApi.update(id,quote).then(
+							function(){
+								//console.log("update: quote:" + wequoteApi.filterText(row.quote));
+								row.id=id;
+								row.save();
+							}
+					).fail(
+							function(error){
+								console.log("errore: " + error);
+							}
+					);
+				}
 			}
 		};
 		params = {
-			search : row.quote
+				search : wequoteApi.filterText(row.quote)
 		};
-		wequoteApi.list(params).then(insert);
+		if (row.id.length==0)
+		{
+			wequoteApi.list(params).then(insert);
+		}
+		else
+		{
+			insert(row.id);
+		}
+
 	};
 	_.each(rows,weQuoteInsertRow);
-	
+
 };
 
 var getSheets = function(sheets)
@@ -80,7 +94,7 @@ rule.minute = now.getMinutes();
 
 var j = schedule.scheduleJob(rule, function(){
 	googleApi.getDataTable(config.indexId).then(getSheets).all();
-    console.log('Schedulazione sheet2mongo at '+(new Date()));
+	console.log('Schedulazione sheet2mongo at '+(new Date()));
 });
 
 console.log('Avvio sheet2mongo.');

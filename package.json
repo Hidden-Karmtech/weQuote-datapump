@@ -31,7 +31,8 @@
     "underscore" : "latest",
     "q" : "latest",
     "cron-parser" : "latest",
-    "long-timeout" : "latest"
+    "long-timeout" : "latest",
+    "underscore.string" : "latest"
   },
   "devDependencies": {},
   "bundleDependencies": [],
