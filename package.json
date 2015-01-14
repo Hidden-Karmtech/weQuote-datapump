@@ -29,7 +29,9 @@
     "request" : "latest",
     "node-schedule" : "latest",
     "underscore" : "latest",
-    "q" : "latest"
+    "q" : "latest",
+    "cron-parser" : "latest",
+    "long-timeout" : "latest"
   },
   "devDependencies": {},
   "bundleDependencies": [],
