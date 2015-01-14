@@ -26,7 +26,7 @@ var weQuoteInsert = function(rows){
 			if(result === -1){
 				wequoteApi.insert(quote).then(
 					function(){
-						console.log("insert: tag:" + row.tag + " quote:" + row.quote);
+						//console.log("insert: tag:" + row.tag + " quote:" + row.quote);
 					}
 				).fail(
 					function(error){
@@ -39,7 +39,7 @@ var weQuoteInsert = function(rows){
 				var id = result;
 				wequoteApi.update(id,quote).then(
 					function(){
-						console.log("update: tag:" + row.tag + " quote:" + row.quote);
+						//console.log("update: tag:" + row.tag + " quote:" + row.quote);
 						row.id=id;
 						row.save();
 					}
