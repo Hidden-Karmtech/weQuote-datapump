@@ -36,7 +36,10 @@ module.exports = {
 				url: apiUrl + "/insert",
 				form: {
 					quote: quote 
-				}
+				},
+				headers: {
+			        'X-Auth': process.env.AUTH_KEY
+			    }
 			},
 			function(error, response, result){
 				if(error){
@@ -57,7 +60,10 @@ module.exports = {
 				form: {
 					quoteId:id,
 					newQuote: quote
-				}
+				},
+				headers: {
+			        'X-Auth': process.env.AUTH_KEY
+			    }
 			},
 			function(error, response, result){
 				if(error){
