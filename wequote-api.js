@@ -6,6 +6,7 @@ var Q = require('q');
 var _ = require('underscore');
 var _s = require('underscore.string');
 var MIN_LEN = 15;
+var key = process.env.AUTH_KEY || 'dummykey';
 
 module.exports = {
 	list : function(params){
@@ -38,7 +39,7 @@ module.exports = {
 					quote: quote 
 				},
 				headers: {
-			        'X-Auth': process.env.AUTH_KEY
+			        'x-authkey': process.env.AUTH_KEY
 			    }
 			},
 			function(error, response, result){
@@ -62,7 +63,7 @@ module.exports = {
 					newQuote: quote
 				},
 				headers: {
-			        'X-Auth': process.env.AUTH_KEY
+			        'x-authkey': process.env.AUTH_KEY
 			    }
 			},
 			function(error, response, result){
