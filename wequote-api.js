@@ -57,14 +57,15 @@ module.exports = {
 	    var deferred = Q.defer();
 		http.put(
 			{
+				headers: {
+					'X-AUTHKEY': key,
+					'content-type': 'application/json'
+				},
 				url: apiUrl + "/update",
-				form: {
+				body: JSON.stringify({
 					quoteId:id,
 					newQuote: quote
-				},
-				headers: {
-			        'X-AUTHKEY': key
-			    }
+				})
 			},
 			function(error, response, result){
 				if(error){

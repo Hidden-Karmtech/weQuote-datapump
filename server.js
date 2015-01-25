@@ -29,7 +29,7 @@ var weQuoteInsert = function(rows){
 				if(result === -1){
 					wequoteApi.insert(quote).then(
 							function(result){
-								//console.log("insert quote:" + wequoteApi.filterText(row.quote));
+								console.log("insert quote:" + wequoteApi.filterText(row.quote));
 								row.id=JSON.parse(result)._id;
 								row.save();
 							}
@@ -44,7 +44,7 @@ var weQuoteInsert = function(rows){
 					var id = result;
 					wequoteApi.update(id,quote).then(
 							function(){
-								//console.log("update: quote:" + wequoteApi.filterText(row.quote));
+								console.log("update: quote:" + wequoteApi.filterText(row.quote));
 								row.id=id;
 								row.save();
 							}
