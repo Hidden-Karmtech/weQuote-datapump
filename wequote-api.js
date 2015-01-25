@@ -39,7 +39,7 @@ module.exports = {
 					quote: quote 
 				},
 				headers: {
-			        'x-authkey': process.env.AUTH_KEY
+			        'X-AUTHKEY': key
 			    }
 			},
 			function(error, response, result){
@@ -63,7 +63,7 @@ module.exports = {
 					newQuote: quote
 				},
 				headers: {
-			        'x-authkey': process.env.AUTH_KEY
+			        'X-AUTHKEY': key
 			    }
 			},
 			function(error, response, result){
