@@ -29,7 +29,7 @@ var weQuoteInsert = function(rows){
 				if(result === -1){
 					wequoteApi.insert(quote).then(
 							function(result){
-								console.log("insert quote:" + wequoteApi.filterText(row.quote));
+								//console.log("insert quote:" + wequoteApi.filterText(row.quote));
 								row.id=JSON.parse(result)._id;
 								row.lastUpdate=new Date();
 								row.save();
@@ -45,7 +45,7 @@ var weQuoteInsert = function(rows){
 					var id = result;
 					wequoteApi.update(id,quote).then(
 							function(){
-								console.log("update: quote:" + wequoteApi.filterText(row.quote));
+								//console.log("update: quote:" + wequoteApi.filterText(row.quote));
 								row.id=id;
 								row.lastUpdate=new Date();
 								row.save();
@@ -91,8 +91,7 @@ var getSheets = function(sheets)
 
 var rule = new schedule.RecurrenceRule();
 var now = new Date();
-now.addMinute();
-rule.minute = now.getMinutes();
+rule.hour = 21;
 
 var j = schedule.scheduleJob(rule, function(){
 	googleApi.getDataTable(config.indexId).then(getSheets).all();
@@ -100,7 +99,9 @@ var j = schedule.scheduleJob(rule, function(){
 });
 
 console.log('Avvio sheet2mongo.');
-console.log('Schedulazione al minuto '+rule.minute);
+console.log('Schedulazione all\'ora : '+rule.hour);
+console.log('Primo avvio...');
+googleApi.getDataTable(config.indexId).then(getSheets).all();
 
 /*
 var params = {
