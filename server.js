@@ -31,11 +31,12 @@ var weQuoteInsert = function(rows){
 							function(result){
 								console.log("insert quote:" + wequoteApi.filterText(row.quote));
 								row.id=JSON.parse(result)._id;
+								row.lastUpdate=new Date();
 								row.save();
 							}
 					).fail(
 							function(error){
-								console.log("errore: " + error);
+								console.log("errore: insert" + error);
 							}
 					);
 				}
@@ -46,11 +47,12 @@ var weQuoteInsert = function(rows){
 							function(){
 								console.log("update: quote:" + wequoteApi.filterText(row.quote));
 								row.id=id;
+								row.lastUpdate=new Date();
 								row.save();
 							}
 					).fail(
 							function(error){
-								console.log("errore: " + error);
+								console.log("errore: update " + error);
 							}
 					);
 				}

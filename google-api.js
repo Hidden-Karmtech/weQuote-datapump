@@ -10,7 +10,7 @@ module.exports = {
 		var mySheet = new googleSpreadsheet(id);
 		mySheet.setAuth(config.googleUsername,config.googlePassword, function(err){
 			mySheet.getRows(config.outputPageNumber ,function(err, rowData){
-				//console.log(rowData.length);
+				console.log(rowData.length);
 				deferred.resolve(rowData);
 			});
 		});
