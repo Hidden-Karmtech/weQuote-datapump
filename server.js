@@ -92,6 +92,7 @@ var getSheets = function(sheets)
 var rule = new schedule.RecurrenceRule();
 var now = new Date();
 rule.hour = 21;
+rule.minute = 0;
 
 var j = schedule.scheduleJob(rule, function(){
 	googleApi.getDataTable(config.indexId).then(getSheets).all();

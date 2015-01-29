@@ -10,8 +10,16 @@ module.exports = {
 		var mySheet = new googleSpreadsheet(id);
 		mySheet.setAuth(config.googleUsername,config.googlePassword, function(err){
 			mySheet.getRows(config.outputPageNumber ,function(err, rowData){
-				//console.log(rowData.length);
-				deferred.resolve(rowData);
+				if (err)
+					{
+						deferred.reject(err);
+					}
+				else
+					{
+						//console.log(rowData.length);
+						deferred.resolve(rowData);
+					}
+				
 			});
 		});
 		return deferred.promise;
